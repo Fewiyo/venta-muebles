@@ -67,6 +67,15 @@ h2{font-family:var(--display);font-weight:400;font-size:clamp(24px,3.4vw,32px);l
 .actions{display:flex;flex-wrap:wrap;gap:8px}
 .dl{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media (max-width:420px){.dl{grid-template-columns:1fr}}
+.copy-box{display:grid;gap:8px}
+.wa-text{margin:0;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:8px;
+  font-family:var(--body);font-size:14px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;user-select:all;color:var(--fg)}
+.copy-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn-copy{padding:12px;border-radius:8px;border:2px solid var(--accent);background:var(--accent);color:var(--accent-fg);
+  font:600 15px var(--body);cursor:pointer}
+.btn-copy[data-precio="0"]{background:var(--surface);color:var(--accent)}
+.btn-copy:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.btn{cursor:pointer;font-family:var(--body)}
 .dl-group{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .dl-label{grid-column:1/-1;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .btn-dl{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 18px;border-radius:8px;
@@ -133,10 +142,35 @@ const wa = txt => "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(txt);
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const DL_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg>';
 const MSG ="Buenas, me gustaría conversar por los muebles.";
-const fbBtn =() => FACEBOOK_URL ? `<a class="btn" href="${FACEBOOK_URL}" target="_blank" rel="noopener">Ver en Facebook</a>` : "";
+const SITE = "https://fewiyo.github.io/venta-muebles/";
+const waText = (it, conPrecio) => [
+  `🪑 *${it.nombre}*`,
+  conPrecio ? `💲 *${clp(it.precio)}*` : null,
+  it.desc,
+  ...it.specs.map(g => `📏 ${g.t}: ` + g.f.map(([k, v]) => `${k} ${v}`).join(" · ")),
+  `📞 Ana Farías · +56 9 9359 4884`,
+  `Fotos y más muebles: ${SITE}`,
+].filter(Boolean).join("\n");
+const allText = conPrecio => `*Venta de muebles usados* 🏡\n\n` +
+  ITEMS.filter(it => !VENDIDOS.includes(it.id)).map(it =>
+    `• *${it.nombre}*` + (conPrecio ? ` — ${clp(it.precio)}` : "")).join("\n") +
+  `\n\n📞 Ana Farías · +56 9 9359 4884\nFotos, medidas y fichas: ${SITE}`;
+
+function copiar(txt, btn) {
+  const ok = () => { const t = btn.textContent; btn.textContent = "¡Copiado!"; setTimeout(() => btn.textContent = t, 1600); };
+  const fallback = () => {
+    const ta = document.createElement("textarea"); ta.value = txt; document.body.appendChild(ta);
+    ta.select(); let done = false; try { done = document.execCommand("copy"); } catch (e) {}
+    ta.remove(); done ? ok() : (btn.textContent = "Selecciona el texto y cópialo");
+  };
+  try { navigator.clipboard.writeText(txt).then(ok, fallback); } catch (e) { fallback(); }
+}
+const fbBtn = () => FACEBOOK_URL ? `<a class="btn" href="${FACEBOOK_URL}" target="_blank" rel="noopener">Ver en Facebook</a>` : "";
 
 document.getElementById("hdr-actions").innerHTML =
-  `<a class="btn primary" href="${wa(MSG)}" target="_blank" rel="noopener">Escribir por WhatsApp</a>` + fbBtn();
+  `<a class="btn primary" href="${wa(MSG)}" target="_blank" rel="noopener">Escribir por WhatsApp</a>` + fbBtn() +
+  `<button class="btn" type="button" data-all="1">Copiar lista con precios</button>` +
+  `<button class="btn" type="button" data-all="0">Copiar lista sin precios</button>`;
 document.getElementById("foot-actions").innerHTML =
   `<a class="btn primary" href="${wa(MSG)}" target="_blank" rel="noopener">Escribir por WhatsApp</a>` + fbBtn();
 document.getElementById("phone").href = wa(MSG);
@@ -156,6 +190,14 @@ document.getElementById("list").innerHTML = ITEMS.map((it, i) => {
       <p class="desc">${esc(it.desc)}</p>
       <div class="specs">${it.specs.map(g => `<h3>${g.t}</h3><dl>${g.f.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>`).join("")}</div>
       <div class="actions">${sold ? "" : `<a class="btn primary" href="${wa(`Hola, me interesa: ${it.nombre} (${clp(it.precio)}). ¿Sigue disponible?`)}" target="_blank" rel="noopener">Me interesa</a>`}</div>
+      <div class="copy-box">
+        <span class="dl-label">Texto para WhatsApp</span>
+        <pre class="wa-text" id="txt-${it.id}">${esc(waText(it, true))}</pre>
+        <div class="copy-row">
+          <button class="btn-copy" type="button" data-copy="${it.id}" data-precio="1">Copiar con precio</button>
+          <button class="btn-copy" type="button" data-copy="${it.id}" data-precio="0">Copiar sin precio</button>
+        </div>
+      </div>
       <div class="dl">${["con", "sin"].map(m => `
         <div class="dl-group">
           <span class="dl-label">Ficha ${m} precio</span>
@@ -168,6 +210,14 @@ document.getElementById("list").innerHTML = ITEMS.map((it, i) => {
 }).join("");
 
 document.addEventListener("click", e => {
+  const c = e.target.closest("[data-copy]");
+  if (c) {
+    const it = ITEMS.find(x => x.id === c.dataset.copy), txt = waText(it, c.dataset.precio === "1");
+    document.getElementById("txt-" + it.id).textContent = txt;
+    return copiar(txt, c);
+  }
+  const a = e.target.closest("[data-all]");
+  if (a) return copiar(allText(a.dataset.all === "1"), a);
   const b = e.target.closest(".thumb"); if (!b) return;
   const g = b.closest(".gallery");
   g.querySelector(".main img").src = b.dataset.src;
