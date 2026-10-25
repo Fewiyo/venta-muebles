@@ -76,7 +76,7 @@ h2{font-family:var(--display);font-weight:400;font-size:clamp(24px,3.4vw,32px);l
 .btn-copy[data-precio="0"]{background:var(--surface);color:var(--accent)}
 .btn-copy:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 button.btn{cursor:pointer;font-family:var(--body)}
-.dl-group{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dl-group{display:grid;gap:8px}
 .dl-label{grid-column:1/-1;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .btn-dl{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 18px;border-radius:8px;
   border:2px solid var(--wood);color:var(--wood);background:var(--surface);text-decoration:none;
@@ -201,8 +201,7 @@ document.getElementById("list").innerHTML = ITEMS.map((it, i) => {
       <div class="dl">${["con", "sin"].map(m => `
         <div class="dl-group">
           <span class="dl-label">Ficha ${m} precio</span>
-          <a class="btn-dl" href="${BASE}pdfs/${m}-precio/${it.pdf}.pdf" target="_blank" rel="noopener">${DL_ICON}PDF</a>
-          <a class="btn-dl" href="${BASE}pdfs/${m}-precio/${it.pdf}.jpg" target="_blank" rel="noopener">${DL_ICON}JPG</a>
+          <a class="btn-dl" href="${BASE}pdfs/${m}-precio/${it.pdf}.jpg" download target="_blank" rel="noopener">${DL_ICON}Descargar</a>
         </div>`).join("")}
       </div>
     </div>
