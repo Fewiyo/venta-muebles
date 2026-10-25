@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Venta de muebles usados de madera: escritorio vintage, juego de comedor con 8 sillas, mueble de música y mueble de computador.">
+<meta property="og:title" content="Muebles de la Nina · Venta de muebles usados">
+<meta property="og:description" content="Escritorio vintage, comedor 8 sillas con mesa extensible y más. Fotos, medidas y precios.">
+<meta property="og:image" content="https://fewiyo.github.io/venta-muebles/img/comedor-1.jpg">
+<meta property="og:type" content="website">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Muebles de la Nina</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: encabezado sobrio + lista vertical de fichas, foto grande a la izquierda y ficha técnica a la derecha */
+:root{
+  --bg:#f3f2ee; --surface:#fbfaf7; --fg:#2b2420; --muted:#6d625a; --line:#ddd6cc;
+  --accent:#3f5a4a; --accent-fg:#f6f4ef; --wood:#8a5a36; --sold:#a33a2c;
+  --display:"Young Serif",Georgia,"Times New Roman",serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1c1a18; --surface:#25221f; --fg:#ece6de; --muted:#a89d92; --line:#3a352f;
+  --accent:#8fb39d; --accent-fg:#16201a; --wood:#d39a6c; --sold:#e07a6a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1c1a18; --surface:#25221f; --fg:#ece6de; --muted:#a89d92; --line:#3a352f;
+  --accent:#8fb39d; --accent-fg:#16201a; --wood:#d39a6c; --sold:#e07a6a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1040px;margin:0 auto}
+header{padding-block:48px 28px;border-bottom:1px solid var(--line);display:grid;gap:14px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--wood);font-weight:600}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,6vw,56px);line-height:1.05;margin:0;text-wrap:balance}
+.lead{max-width:60ch;color:var(--muted);margin:0}
+.hdr-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;border:1px solid var(--line);
+  color:var(--fg);text-decoration:none;font-weight:500;font-size:15px;background:var(--surface)}
+.btn:hover{border-color:var(--fg)}
+.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn:focus-visible,.thumb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.list{display:grid;gap:56px;padding-block:44px}
+.item{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:32px;align-items:start}
+@media (max-width:760px){.item{grid-template-columns:1fr;gap:18px}}
+.gallery{display:grid;gap:8px;min-width:0}
+.main{position:relative;aspect-ratio:4/3;max-width:100%;background:var(--line);border-radius:6px;overflow:hidden}
+.main img{width:100%;height:100%;object-fit:cover;display:block}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.thumb{width:68px;height:68px;padding:0;border:2px solid transparent;border-radius:4px;overflow:hidden;cursor:pointer;background:none}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb[aria-current="true"]{border-color:var(--wood)}
+.sold-tag{position:absolute;top:14px;left:14px;background:var(--sold);color:#fff;font-weight:600;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:3px}
+.info{display:grid;gap:16px;min-width:0}
+.num{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(24px,3.4vw,32px);line-height:1.15;margin:0;text-wrap:balance}
+.price{font-family:var(--display);font-size:30px;color:var(--wood);font-variant-numeric:tabular-nums}
+.item.sold .price{text-decoration:line-through;color:var(--muted)}
+.desc{margin:0;color:var(--muted)}
+.specs{border-top:1px solid var(--line)}
+.specs h3{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:14px 0 4px}
+.specs dl{display:grid;grid-template-columns:auto 1fr;margin:0}
+.specs dt,.specs dd{padding:7px 0;border-bottom:1px solid var(--line);margin:0}
+.specs dt{color:var(--muted);padding-right:20px}
+.specs dd{text-align:right;font-variant-numeric:tabular-nums;font-weight:500}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.dl{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;color:var(--muted)}
+.dl a{color:var(--fg);text-underline-offset:3px}
+footer{border-top:1px solid var(--line);padding-block:32px 48px;display:grid;gap:10px}
+footer h2{font-size:26px}
+.phone{font-size:20px;font-variant-numeric:tabular-nums;color:var(--accent);text-underline-offset:4px;width:fit-content}
+.note{font-size:14px;color:var(--muted);max-width:60ch;margin:0}
+@media (prefers-reduced-motion:no-preference){.main img{transition:opacity .2s}}
+</style>
+
+</head><body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Venta de muebles usados</span>
+    <h1>Muebles de la Nina</h1>
+    <p class="lead">Muebles de madera de una casa familiar, bien cuidados y listos para un nuevo hogar. Cada ficha tiene medidas reales, fotos y precio. Puedes descargar la ficha en PDF, con o sin precio, para compartirla.</p>
+    <div class="hdr-actions" id="hdr-actions"></div>
+  </header>
+
+  <main class="list" id="list"></main>
+
+  <footer>
+    <span class="eyebrow">Contacto</span>
+    <h2>Ana Farías Antognini</h2>
+    <a class="phone" id="phone" href="https://wa.me/56993594884" target="_blank" rel="noopener">+56 9 9359 4884</a>
+    <div class="actions" id="foot-actions"></div>
+    <p class="note">Escríbenos para coordinar una visita y ver los muebles en persona.</p>
+  </footer>
+</div>
+
+<script>
+const PHONE = "56993594884";
+const FACEBOOK_URL = ""; // pegar aquí el link de la publicación
+const BASE = "https://fewiyo.github.io/venta-muebles/";
+
+const ITEMS = [
+  { id:"escritorio", pdf:"01-escritorio-vintage-wurlitzer", nombre:"Escritorio vintage Wurlitzer de madera", precio:140000,
+    desc:"Escritorio de madera maciza con cajonera de tres cajones y tirador metálico original.",
+    fotos:["escritorio-1","escritorio-2"],
+    specs:[{t:"Medidas",f:[["Ancho","111 cm"],["Profundidad","62 cm"],["Alto","88 cm"]]}] },
+  { id:"musica", pdf:"02-mueble-equipo-musica", nombre:"Mueble para equipo de música con ruedas", precio:100000,
+    desc:"Mueble con repisas y ruedas, ideal para equipo de sonido, tocadiscos o colección de CD. El equipo de la foto no está incluido.",
+    fotos:["musica-1","musica-2"],
+    specs:[{t:"Medidas",f:[["Ancho","100 cm"],["Profundidad","50 cm"],["Alto","80 cm"]]}] },
+  { id:"comedor", pdf:"03-juego-comedor-8-sillas", nombre:"Juego de comedor clásico: 8 sillas y mesa extensible", precio:350000,
+    desc:"Mesa ovalada de madera que se extiende de 176 a 227 cm, con 8 sillas talladas de respaldo alto tapizadas en tela floral.",
+    fotos:["comedor-1","comedor-2","comedor-3","comedor-silla","comedor-tapiz"],
+    specs:[
+      {t:"Mesa extensible",f:[["Ancho","111 cm"],["Largo","176 cm"],["Largo extendida","227 cm"],["Alto","80 cm"]]},
+      {t:"Silla (×8)",f:[["Ancho","47 cm"],["Profundidad","44 cm"],["Alto","110 cm"]]}] },
+  { id:"computador", pdf:"04-mueble-computador", nombre:"Mueble para computador", precio:30000,
+    desc:"Mueble compacto con bandeja deslizable para teclado, repisa inferior y ruedas.",
+    fotos:["computador-1","computador-2"],
+    specs:[{t:"Medidas",f:[["Ancho","61,5 cm"],["Profundidad","36 cm"],["Alto","76 cm"]]}] },
+];
+const VENDIDOS = []; // ids vendidos, p. ej. ["computador"]
+
+const clp = n => "$" + n.toLocaleString("es-CL");
+const wa = txt => "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(txt);
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const MSG = "Buenas, me gustaría conversar por los muebles.";
+const fbBtn =() => FACEBOOK_URL ? `<a class="btn" href="${FACEBOOK_URL}" target="_blank" rel="noopener">Ver en Facebook</a>` : "";
+
+document.getElementById("hdr-actions").innerHTML =
+  `<a class="btn primary" href="${wa(MSG)}" target="_blank" rel="noopener">Escribir por WhatsApp</a>` + fbBtn();
+document.getElementById("foot-actions").innerHTML =
+  `<a class="btn primary" href="${wa(MSG)}" target="_blank" rel="noopener">Escribir por WhatsApp</a>` + fbBtn();
+document.getElementById("phone").href = wa(MSG);
+
+document.getElementById("list").innerHTML = ITEMS.map((it, i) => {
+  const sold = VENDIDOS.includes(it.id);
+  return `<article class="item${sold ? " sold" : ""}" id="${it.id}">
+    <div class="gallery">
+      <div class="main"><img src="img/${it.fotos[0]}.jpg" alt="${esc(it.nombre)}" loading="lazy">${sold ? '<span class="sold-tag">Vendido</span>' : ""}</div>
+      <div class="thumbs">${it.fotos.map((f, k) =>
+        `<button class="thumb" type="button" data-src="img/${f}.jpg" aria-label="Foto ${k + 1}" aria-current="${k === 0}"><img src="img/${f}.jpg" alt="" loading="lazy"></button>`).join("")}</div>
+    </div>
+    <div class="info">
+      <span class="num">Mueble ${i + 1} de ${ITEMS.length} · Usado</span>
+      <h2>${esc(it.nombre)}</h2>
+      <span class="price">${clp(it.precio)}</span>
+      <p class="desc">${esc(it.desc)}</p>
+      <div class="specs">${it.specs.map(g => `<h3>${g.t}</h3><dl>${g.f.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>`).join("")}</div>
+      <div class="actions">${sold ? "" : `<a class="btn primary" href="${wa(`Hola, me interesa: ${it.nombre} (${clp(it.precio)}). ¿Sigue disponible?`)}" target="_blank" rel="noopener">Me interesa</a>`}</div>
+      <div class="dl">Ficha PDF:
+        <a href="${BASE}pdfs/con-precio/${it.pdf}.pdf" target="_blank" rel="noopener">con precio</a>
+        <a href="${BASE}pdfs/sin-precio/${it.pdf}.pdf" target="_blank" rel="noopener">sin precio</a>
+      </div>
+    </div>
+  </article>`;
+}).join("");
+
+document.addEventListener("click", e => {
+  const b = e.target.closest(".thumb"); if (!b) return;
+  const g = b.closest(".gallery");
+  g.querySelector(".main img").src = b.dataset.src;
+  g.querySelectorAll(".thumb").forEach(t => t.setAttribute("aria-current", t === b));
+});
+</script>
+
+</body></html>
