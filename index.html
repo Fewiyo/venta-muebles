@@ -142,7 +142,8 @@ const wa = txt => "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(txt);
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const DL_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg>';
 const MSG ="Buenas, me gustaría conversar por los muebles.";
-const SITE = "https://fewiyo.github.io/venta-muebles/";
+const DL_ATTR = location.hostname.endsWith("github.io") ? " download" : "";
+const SITE ="https://fewiyo.github.io/venta-muebles/";
 const waText = (it, conPrecio) => [
   `🪑 *${it.nombre}*`,
   conPrecio ? `💲 *${clp(it.precio)}*` : null,
@@ -201,7 +202,7 @@ document.getElementById("list").innerHTML = ITEMS.map((it, i) => {
       <div class="dl">${["con", "sin"].map(m => `
         <div class="dl-group">
           <span class="dl-label">Ficha ${m} precio</span>
-          <a class="btn-dl" href="${BASE}pdfs/${m}-precio/${it.pdf}.jpg" download target="_blank" rel="noopener">${DL_ICON}Descargar</a>
+          <a class="btn-dl" href="${BASE}pdfs/${m}-precio/${it.pdf}.jpg"${DL_ATTR} target="_blank" rel="noopener">${DL_ICON}Descargar</a>
         </div>`).join("")}
       </div>
     </div>
