@@ -65,8 +65,13 @@ h2{font-family:var(--display);font-weight:400;font-size:clamp(24px,3.4vw,32px);l
 .specs dt{color:var(--muted);padding-right:20px}
 .specs dd{text-align:right;font-variant-numeric:tabular-nums;font-weight:500}
 .actions{display:flex;flex-wrap:wrap;gap:8px}
-.dl{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;color:var(--muted)}
-.dl a{color:var(--fg);text-underline-offset:3px}
+.dl{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:420px){.dl{grid-template-columns:1fr}}
+.btn-dl{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 18px;border-radius:8px;
+  border:2px solid var(--wood);color:var(--wood);background:var(--surface);text-decoration:none;
+  font-weight:600;font-size:16px;line-height:1.25;text-align:center}
+.btn-dl:hover{background:var(--wood);color:var(--surface)}
+.btn-dl:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 footer{border-top:1px solid var(--line);padding-block:32px 48px;display:grid;gap:10px}
 footer h2{font-size:26px}
 .phone{font-size:20px;font-variant-numeric:tabular-nums;color:var(--accent);text-underline-offset:4px;width:fit-content}
@@ -124,7 +129,8 @@ const VENDIDOS = []; // ids vendidos, p. ej. ["computador"]
 const clp = n => "$" + n.toLocaleString("es-CL");
 const wa = txt => "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(txt);
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const MSG = "Buenas, me gustaría conversar por los muebles.";
+const DL_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg>';
+const MSG ="Buenas, me gustaría conversar por los muebles.";
 const fbBtn =() => FACEBOOK_URL ? `<a class="btn" href="${FACEBOOK_URL}" target="_blank" rel="noopener">Ver en Facebook</a>` : "";
 
 document.getElementById("hdr-actions").innerHTML =
@@ -148,9 +154,9 @@ document.getElementById("list").innerHTML = ITEMS.map((it, i) => {
       <p class="desc">${esc(it.desc)}</p>
       <div class="specs">${it.specs.map(g => `<h3>${g.t}</h3><dl>${g.f.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>`).join("")}</div>
       <div class="actions">${sold ? "" : `<a class="btn primary" href="${wa(`Hola, me interesa: ${it.nombre} (${clp(it.precio)}). ¿Sigue disponible?`)}" target="_blank" rel="noopener">Me interesa</a>`}</div>
-      <div class="dl">Ficha PDF:
-        <a href="${BASE}pdfs/con-precio/${it.pdf}.pdf" target="_blank" rel="noopener">con precio</a>
-        <a href="${BASE}pdfs/sin-precio/${it.pdf}.pdf" target="_blank" rel="noopener">sin precio</a>
+      <div class="dl">
+        <a class="btn-dl" href="${BASE}pdfs/con-precio/${it.pdf}.pdf" target="_blank" rel="noopener">${DL_ICON}Descargar PDF con precio</a>
+        <a class="btn-dl" href="${BASE}pdfs/sin-precio/${it.pdf}.pdf" target="_blank" rel="noopener">${DL_ICON}Descargar PDF sin precio</a>
       </div>
     </div>
   </article>`;
