@@ -65,8 +65,10 @@ h2{font-family:var(--display);font-weight:400;font-size:clamp(24px,3.4vw,32px);l
 .specs dt{color:var(--muted);padding-right:20px}
 .specs dd{text-align:right;font-variant-numeric:tabular-nums;font-weight:500}
 .actions{display:flex;flex-wrap:wrap;gap:8px}
-.dl{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dl{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media (max-width:420px){.dl{grid-template-columns:1fr}}
+.dl-group{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dl-label{grid-column:1/-1;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .btn-dl{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 18px;border-radius:8px;
   border:2px solid var(--wood);color:var(--wood);background:var(--surface);text-decoration:none;
   font-weight:600;font-size:16px;line-height:1.25;text-align:center}
@@ -154,9 +156,12 @@ document.getElementById("list").innerHTML = ITEMS.map((it, i) => {
       <p class="desc">${esc(it.desc)}</p>
       <div class="specs">${it.specs.map(g => `<h3>${g.t}</h3><dl>${g.f.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>`).join("")}</div>
       <div class="actions">${sold ? "" : `<a class="btn primary" href="${wa(`Hola, me interesa: ${it.nombre} (${clp(it.precio)}). ¿Sigue disponible?`)}" target="_blank" rel="noopener">Me interesa</a>`}</div>
-      <div class="dl">
-        <a class="btn-dl" href="${BASE}pdfs/con-precio/${it.pdf}.pdf" target="_blank" rel="noopener">${DL_ICON}Descargar PDF con precio</a>
-        <a class="btn-dl" href="${BASE}pdfs/sin-precio/${it.pdf}.pdf" target="_blank" rel="noopener">${DL_ICON}Descargar PDF sin precio</a>
+      <div class="dl">${["con", "sin"].map(m => `
+        <div class="dl-group">
+          <span class="dl-label">Ficha ${m} precio</span>
+          <a class="btn-dl" href="${BASE}pdfs/${m}-precio/${it.pdf}.pdf" target="_blank" rel="noopener">${DL_ICON}PDF</a>
+          <a class="btn-dl" href="${BASE}pdfs/${m}-precio/${it.pdf}.jpg" target="_blank" rel="noopener">${DL_ICON}JPG</a>
+        </div>`).join("")}
       </div>
     </div>
   </article>`;
